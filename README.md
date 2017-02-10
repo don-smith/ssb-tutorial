@@ -30,7 +30,7 @@ To issue commands on the command line, you need decide which environment/contain
 
 ```sh
 docker ps -a
-docker exec -it ssbtutorial_pub_1 /bin/bash
+docker exec -it pub /bin/bash
 ```
 
 Once on the command line you can run scuttlebot client commands (for example):

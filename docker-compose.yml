@@ -3,21 +3,36 @@ services:
   pub:
     build:
       context: .
+    container_name: pub
+    # image: locksmithdon/ssb-tutorial
+    environment:
+      SSB_SERVER_PORT: 8118
+      SSB_DEBUG_PORT: 9119
     ports:
       - "8118:8118"
-      - "9119:9119" # for debugging
-    command: /scuttlebot/bin.js server --host pub --port 8118
+      - "9119:9119"
+    command: /scuttlebot/${PUB_ACTION-run}-server.sh
   user1:
     build:
       context: .
+    container_name: user1
+    # image: locksmithdon/ssb-tutorial
+    environment:
+      SSB_SERVER_PORT: 8228
+      SSB_DEBUG_PORT: 9229
     ports:
       - "8228:8228"
-      - "9229:9229" # for debugging
-    command: /scuttlebot/bin.js server --host user1 --port 8228
+      - "9229:9229"
+    command: /scuttlebot/${USER1_ACTION-run}-server.sh
   user2:
     build:
       context: .
+    container_name: user2
+    # image: locksmithdon/ssb-tutorial
+    environment:
+      SSB_SERVER_PORT: 8338
+      SSB_DEBUG_PORT: 9339
     ports:
       - "8338:8338"
-      - "9339:9339" # for debugging
-    command: /scuttlebot/bin.js server --host user2 --port 8338
+      - "9339:9339"
+    command: /scuttlebot/${USER2_ACTION-run}-server.sh

@@ -11,5 +11,10 @@ WORKDIR /scuttlebot
 # the default SSB network
 COPY ssb-cap.js lib
 
+COPY run-server.sh .
+COPY debug-server.sh .
+RUN chmod +x run-server.sh
+RUN chmod +x debug-server.sh
+
 RUN npm install
-RUN npm install
+RUN npm install # this seems to be necessary
