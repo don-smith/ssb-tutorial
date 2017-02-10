@@ -24,21 +24,22 @@ docker-compose up
 That last command will take some time while the 3 environments are built. After they are built, the Scuttlebot service will be running on each of them.
 
 
-# Development notes
+## Scuttlebot client commands
 
-To get on the command line in the container:
+To issue commands on the command line, you need decide which environment/container you wish to run on, and then get on its command line. To see a list of containers and access the command line of one of them:
 
 ```sh
+docker ps -a
 docker exec -it ssbtutorial_pub_1 /bin/bash
 ```
 
-On the command line in the container (for example):
+Once on the command line you can run scuttlebot client commands (for example):
 
 ```sh
 node --inspect=9119 --debug-brk ./bin.js whoami --host pub --port 8118
 ```
 
-The host/port combinations are:
+The available host/port combinations are:
 
 | Host  | Listening | Debugging |
 |-------|-----------|-----------|
@@ -46,4 +47,4 @@ The host/port combinations are:
 | user1 | 8228      | 9229      |
 | user2 | 8338      | 9339      |
 
-Change `whoami` to any available command. Use `-h` to see a list of commands.
+In the example above, the `whoami` command can be changed to any available command. Use the `-h` command to see a list of available commands.
