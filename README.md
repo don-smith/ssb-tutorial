@@ -29,14 +29,18 @@ That last command will take some time while the 3 environments are built. After 
 To issue commands on the command line, you need decide which environment/container you wish to run on, and then get on its command line. To see a list of containers and access the command line of one of them:
 
 ```sh
-docker ps -a
+docker ps -a # should see pub, user1 and user2
 docker exec -it pub /bin/bash
 ```
 
 Once on the command line you can run scuttlebot client commands (for example):
 
 ```sh
-node --inspect=9119 --debug-brk ./bin.js whoami --host pub --port 8118
+# Without debugging
+./bin.js whoami --port 8118
+
+# With debugging
+node --inspect=9119 --debug-brk ./bin.js whoami --port 8118
 ```
 
 The available host/port combinations are:
