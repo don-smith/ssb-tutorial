@@ -1,0 +1,23 @@
+version: '2'
+services:
+  pub:
+    build:
+      context: .
+    ports:
+      - "8118:8118"
+      - "9119:9119" # for debugging
+    command: /scuttlebot/bin.js server --host pub --port 8118
+  user1:
+    build:
+      context: .
+    ports:
+      - "8228:8228"
+      - "9229:9229" # for debugging
+    command: /scuttlebot/bin.js server --host user1 --port 8228
+  user2:
+    build:
+      context: .
+    ports:
+      - "8338:8338"
+      - "9339:9339" # for debugging
+    command: /scuttlebot/bin.js server --host user2 --port 8338
