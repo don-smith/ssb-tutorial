@@ -40,16 +40,18 @@ docker exec -it pub /bin/bash
 Now your prompt should be `root@pub:/scuttlebot# ` which means you're in the `/scuttlebot` folder inside the `pub` container. There is also a `/shared` folder that maps to the `/scuttlebot/shared` folder so we can share files between containers and our computer. These commands will create a text file containing the ID of `pub` and `exit` the container.
 
 ```sh
-./bin.js whoami --port 8118 > /shared/pub/id.txt
+./bin.js whoami $SSB_CFG > /shared/pub/id.txt
 exit
 ```
+
+The `$SSB_CFG` environment variable is only in place to make it easier to run scuttlebot commands in the environment of this tutorial. If you're interested, see `docker-compose.yml` (or run `echo $SSB_CFG` within a container) to see its values.
 
 Now let's do the same thing for the `user1` and `user2` containers. Note: the port number are different for each one.
 
 ```sh
 # For user1
 docker exec -it user1 /bin/bash
-./bin.js whoami --port 8228 > /shared/user1/id.txt
+./bin.js whoami $SSB_CFG > /shared/user1/id.txt
 exit
 ```
 and
@@ -57,7 +59,7 @@ and
 ```sh
 # For user2
 docker exec -it user2 /bin/bash
-./bin.js whoami --port 8338 > /shared/user2/id.txt
+./bin.js whoami $SSB_CFG > /shared/user2/id.txt
 exit
 ```
 
@@ -70,10 +72,6 @@ _More instructions forthcoming ..._
 # Unplaced tutorial notes
 
 I'll end up putting this content somewhere. For now it's here.
-
-## Public keys getting recreated
-
-Anytime a container is recreated (explictly deleted with `docker rm` or going back and forth between debug mode) the node public key IDs is recreated, which will break connections between it and other nodes. I'm hoping if I can redirect where scuttlebot saves its keys, I can point them to `/shared` so it will use the ones initially created.
 
 
 ## Debugging the server process
