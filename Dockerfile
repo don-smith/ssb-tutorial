@@ -12,8 +12,8 @@ WORKDIR /scuttlebot
 COPY ssb-cap.js lib
 
 COPY run-server.sh .
-COPY debug-server.sh .
 RUN chmod +x run-server.sh
+COPY debug-server.sh .
 RUN chmod +x debug-server.sh
 
 RUN npm install
