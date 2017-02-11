@@ -29,7 +29,7 @@ That last command will take some time while the image is downloaded and the 3 no
 Before they can begin communicating with each other, they must be directly or indirectly connected. And to connect them, we need their IDs.
 
 
-## Saving the public key IDs
+## Saving the feed IDs
 
 The nodes should still be running from the instructions above. In a different terminal window, navigate to the `ssb-tutorial` repo folder. First, let's get on the command line inside the `pub` node.
 
@@ -63,15 +63,50 @@ docker exec -it user2 /bin/bash
 exit
 ```
 
-Now we have the IDs of each of the containers.
+Now we have the feed ID saved for each container.
+
+
+## Following a feed
+
+The containers should still be running. Let's have `user2` follow `user1`. Using a text editor, copy the value of `id` in `/shared/user1/id.txt` onto your clipboard. And example value looks something like:
+
+```
+@SdrtWPT0146ez9c9idvaTeWEiPKD6HHe9PTDKw/Imek=.ed25519
+```
+
+Now let's get on the command line of the `user2` container and follow `user1`. Instead of the contact feed ID value below, paste yours from your clipboard.
+
+```sh
+docker exec -it user2 /bin/bash
+./bin.js publish $SSB_CFG --type contact --following \
+  --contact @SdrtWPT0146ez9c9idvaTeWEiPKD6HHe9PTDKw/Imek=.ed25519
+```
+
+
+## Viewing a container's feed
+
+```sh
+docker exec -it user2 /bin/bash
+./bin.js log $SSB_CFG
+```
+
+Notice how you can see the follow post, but that's all.
+
+
+## Posting a public message
+
+```sh
+docker exec -it user1 /bin/bash
+./bin.js publish $SSB_CFG --type post --text "User1 is now online"
+```
+
 
 _More instructions forthcoming ..._
 
 
-
 # Unplaced tutorial notes
 
-I'll end up putting this content somewhere. For now it's here.
+I'll end up putting this content somewhere sensible. For now it's here.
 
 
 ## Debugging the server process
