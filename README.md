@@ -4,6 +4,11 @@ This is a hands-on walk-through, accompanied by some explanatory narrative, for 
 
 I'm writing this tutorial as I enter my Scuttleverse learning journey in hopes it will make it easier for others to understand how the pieces work together.
 
+Before we get started it's worth noting the great documentation that already exists. You should definitely use them while going through this tutorial to get more information and context.
+
+* [Scuttlebot docs](https://ssbc.github.io/scuttlebot/) and specifically its [tutorial](https://ssbc.github.io/docs/scuttlebot/tutorial.html) and [API/CLI Reference](https://ssbc.github.io/scuttlebot/api.html).
+* _more links forthcoming_
+
 
 ## Preparation
 
@@ -107,6 +112,10 @@ _More instructions forthcoming ..._
 # Unplaced tutorial notes
 
 I'll end up putting this content somewhere sensible. For now it's here.
+
+## Figure out how to use `sbot`
+
+Right now I'm using `./bin.js` everywhere. This could be confusing to others who see `sbot` used throughout the docs and what they are likely to use outside of this tutorial.
 
 
 ## Debugging the server process
