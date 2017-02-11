@@ -13,7 +13,6 @@ services:
     volumes:
       - ./shared:/shared
     ports:
-      - "8118:8118"
       - "9119:9119"
   user1:
     hostname: user1
@@ -21,14 +20,13 @@ services:
     image: locksmithdon/ssb-tutorial
     command: /scuttlebot/${USER1_ACTION-run}-server.sh
     environment:
-      SSB_CFG: --port 8228 --path /shared/user1/.ssb
-      SSB_SERVER_PORT: 8228
+      SSB_CFG: --port 8118 --path /shared/user1/.ssb
+      SSB_SERVER_PORT: 8118
       SSB_DEBUG_PORT: 9229
       SSB_HOST: user1
     volumes:
       - ./shared:/shared
     ports:
-      - "8228:8228"
       - "9229:9229"
   user2:
     hostname: user2
@@ -36,12 +34,11 @@ services:
     image: locksmithdon/ssb-tutorial
     command: /scuttlebot/${USER2_ACTION-run}-server.sh
     environment:
-      SSB_CFG: --port 8338 --path /shared/user2/.ssb
-      SSB_SERVER_PORT: 8338
+      SSB_CFG: --port 8118 --path /shared/user2/.ssb
+      SSB_SERVER_PORT: 8118
       SSB_DEBUG_PORT: 9339
       SSB_HOST: user2
     volumes:
       - ./shared:/shared
     ports:
-      - "8338:8338"
       - "9339:9339"
