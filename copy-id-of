@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+id=$(cat shared/$1/id.txt | jq -r '. .id')
+echo $id | xclip -sel clip
+echo "ID for $1 is on your clipboard: $id"

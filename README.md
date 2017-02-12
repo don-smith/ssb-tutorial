@@ -12,7 +12,7 @@ Before we get started it's worth noting the great documentation that already exi
 
 ## Preparation
 
-This tutorial uses [Docker](https://www.docker.com) so we can easily setup our laboratory with a few clients on a single machine easily. You don't need to have previous experience with Docker - detailed steps and explanations are provided. If you don't already have Docker installed, you can [get Docker here](https://docs.docker.com/engine/getstarted/step_one/#step-1-get-docker). You also need to [install Docker Compose](https://docs.docker.com/compose/install/) if you haven't already.
+This tutorial uses [Docker](https://www.docker.com) so we can easily setup our laboratory with a few clients on a single machine easily. You don't need to have previous experience with Docker - detailed steps and explanations are provided. If you don't already have it installed, you can [get Docker here](https://docs.docker.com/engine/getstarted/step_one/#step-1-get-docker). You also need to [install Docker Compose](https://docs.docker.com/compose/install/) if you haven't already.
 
 Once you're set up, these two commands (run separately) should not give you unexpected results:
 
@@ -29,7 +29,7 @@ cd ssb-tutorial
 docker-compose up
 ```
 
-That last command will take some time while the image is downloaded and the 3 node containers are built. Once finished, the Scuttlebot service will be running on each of them. Later, _not now_, you can stop the containers using `Ctrl-c`.
+That last command will take some time while the image is downloaded and the 3 node containers are built. Once finished, the `sbot service` will be running on each of them. Later, _not now_, you can stop the containers using `Ctrl-c`.
 
 Before they can begin communicating with each other, they must be directly or indirectly connected. And to connect them, we need their IDs.
 
@@ -39,7 +39,10 @@ Before they can begin communicating with each other, they must be directly or in
 The nodes should still be running from the instructions above. In a different terminal window, navigate to the `ssb-tutorial` repo folder. First, let's get on the command line inside the `pub` node.
 
 ```sh
-docker exec -it pub /bin/bash
+./cli-for pub
+
+# This is just a simple script that does this:
+# docker exec -it $1 /bin/bash
 ```
 
 Now your prompt should be `root@pub:/scuttlebot# ` which means you're in the `/scuttlebot` folder inside the `pub` container. There is also a `/shared` folder that maps to the `/scuttlebot/shared` folder so we can share files between containers and our computer. These commands will create a text file containing the ID of `pub` and `exit` the container.
@@ -51,19 +54,16 @@ exit
 
 The `$SSB_CFG` environment variable is only in place to make it easier to run scuttlebot commands in the environment of this tutorial. If you're interested, see `docker-compose.yml` (or run `echo $SSB_CFG` within a container) to see its values.
 
-Now let's do the same thing for the `user1` and `user2` containers. Note: the port number are different for each one.
+Now let's do the same thing for the `user1` and `user2` containers.
 
 ```sh
 # For user1
-docker exec -it user1 /bin/bash
+./cli-for user1
 ./bin.js whoami $SSB_CFG > /shared/user1/id.txt
 exit
-```
-and
 
-```sh
 # For user2
-docker exec -it user2 /bin/bash
+./cli-for user2
 ./bin.js whoami $SSB_CFG > /shared/user2/id.txt
 exit
 ```
@@ -73,16 +73,18 @@ Now we have the feed ID saved for each container.
 
 ## Following a feed
 
-The containers should still be running. Let's have `user2` follow `user1`. Using a text editor, copy the value of `id` in `/shared/user1/id.txt` onto your clipboard. And example value looks something like:
+Let's have `user2` follow `user1`. On your machine (not in a container), use a text editor to copy the value of `id` in `/shared/user1/id.txt` onto your clipboard. **Tip**: if you have [`jq`](https://stedolan.github.io/jq/) and [`xclip`](https://github.com/astrand/xclip) installed, you can do this quickly without a text editor by running `./copy-id-of user1` (recommended).
+
+An example value looks something like this:
 
 ```
 @SdrtWPT0146ez9c9idvaTeWEiPKD6HHe9PTDKw/Imek=.ed25519
 ```
 
-Now let's get on the command line of the `user2` container and follow `user1`. Instead of the contact feed ID value below, paste yours from your clipboard.
+Now let's get on the command line of the `user2` container and follow `user1`. The containers should still be running. Instead of the contact feed ID value below, paste yours from your clipboard.
 
 ```sh
-docker exec -it user2 /bin/bash
+./cli-for user2
 ./bin.js publish $SSB_CFG --type contact --following \
   --contact @SdrtWPT0146ez9c9idvaTeWEiPKD6HHe9PTDKw/Imek=.ed25519
 ```
@@ -91,7 +93,7 @@ docker exec -it user2 /bin/bash
 ## Viewing a container's feed
 
 ```sh
-docker exec -it user2 /bin/bash
+./cli-for user2
 ./bin.js log $SSB_CFG
 ```
 
@@ -101,7 +103,7 @@ Notice how you can see the follow post, but that's all.
 ## Posting a public message
 
 ```sh
-docker exec -it user1 /bin/bash
+./cli-for user1
 ./bin.js publish $SSB_CFG --type post --text "User1 is now online"
 ```
 
@@ -151,7 +153,7 @@ To issue commands on the command line, you need decide which environment/contain
 
 ```sh
 docker ps -a # should see pub, user1 and user2
-docker exec -it pub /bin/bash
+./cli-for pub
 ```
 
 Once on the command line you can run scuttlebot client commands (for example):
