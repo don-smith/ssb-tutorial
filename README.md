@@ -92,20 +92,40 @@ Now let's get on the command line of the `user2` container and follow `user1`. T
 
 ## Viewing a container's feed
 
+While still on user2's command line, have a look at all available feeds.
+
 ```sh
-./cli-for user2
 ./bin.js log $SSB_CFG
+exit
 ```
 
 Notice how you can see the follow post, but that's all.
 
+You can use `feed` instead of `log` if you want to see only the feed for user2. Right now they are the same because nothing is being replicated between the peers. Let's change that.
+
 
 ## Posting a public message
+
+Now we're going to publish a post as user1 in hopes it will replicate to user2.
 
 ```sh
 ./cli-for user1
 ./bin.js publish $SSB_CFG --type post --text "User1 is now online"
+exit
 ```
+
+Now exit user1's command line, open user2's command line, and view the log again.
+
+```sh
+exit
+./cli-for user2
+./bin.js log $SSB_CFG
+```
+
+:tada: you should now see user1's post in user2's logs. Replication has occurred!
+
+
+
 
 
 _More instructions forthcoming ..._
